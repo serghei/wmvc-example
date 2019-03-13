@@ -57,6 +57,16 @@ class Image
 		// destination image
 		$cropped_image = imagecreatetruecolor($target_w, $target_h);
 
+		
+		// *** SAVING ALPHA FOR PNG IMAGES starts HERE ***//
+		imagealphablending($cropped_image, false );
+		imagesavealpha($cropped_image, true); //saving transparency
+		
+		$transparent = imagecolorallocatealpha($dst_img, 255, 255, 255, 127); //seting transparent background
+		imagefilledrectangle($cropped_image, 0, 0, $w, $h, $transparent);
+		// *** SAVING ALPHA FOR PNG IMAGES ends HERE ***//
+		
+		
 		// crop & resize the image
 		imagecopyresampled($cropped_image, $this->image, 0, 0, $x, $y, $target_w, $target_h, $w, $h);
 
